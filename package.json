@@ -1,0 +1,22 @@
+{
+  "name": "route-loader",
+  "version": "1.0.0",
+  "description": "make file tree as a json of React-Router",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inu1255/route-loader.git"
+  },
+  "keywords": [
+    "route-loader"
+  ],
+  "author": "inu1255",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/inu1255/route-loader/issues"
+  },
+  "homepage": "https://github.com/inu1255/route-loader#readme"
+}
