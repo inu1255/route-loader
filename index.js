@@ -52,10 +52,10 @@ function getRoute(rootPath){
 }
 
 module.exports = function(source, map) {
-    console.log(this)
+    this.cacheable();
+    var callback = this.async();
     getRoute("src/views/").then((data)=>{
-        console.log(data)
         source = "module.exports = " + JSON.stringify(data, undefined, "\t") + ";";
-        this.callback(null, source, map);
+        callback(null, source, map);
     })
 };
