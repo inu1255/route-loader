@@ -20,7 +20,7 @@ function getRoute(rootPath){
             });
         }
         function walk(dir,path) {
-            var data = {path:path,component:"",childRoutes:[]}
+            var data = {path:path,url:"/"+dir.substring(rootPath.length,dir.length-1),component:"",childRoutes:[]}
             dir = /\/$/.test(dir) ? dir : dir + '/';
             var files = fs.readdirSync(dir);
             files.forEach(function (item, next) {
@@ -32,7 +32,7 @@ function getRoute(rootPath){
                     var name = item.replace(/\.jsx?$/,"")
                     // 路由相对地址
                     var importPath = "./"+(dir+item).substring(rootPath.length)
-                    var route = {component:importPath}
+                    var route = {component:importPath,url:"/"+(dir+name).substring(rootPath.length)}
                     // 添加 indexRoute
                     if(name=="index")data.indexRoute = route
                     // 添加 childRoutes
@@ -50,6 +50,11 @@ function getRoute(rootPath){
         result = walk(rootPath,"/")
     })
 }
+
+getRoute("src/views/").then((data)=>{
+    console.log(data)
+    console.log(data.childRoutes[0])
+})
 
 module.exports = function(source, map) {
     this.cacheable();
