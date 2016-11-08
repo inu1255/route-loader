@@ -20,11 +20,5 @@
   "bugs": {
     "url": "https://github.com/inu1255/route-loader/issues"
   },
-  "homepage": "https://github.com/inu1255/route-loader#readme",
-  "gitHead": "223207c39061ac0102d800251f3de4551f516b7b",
-  "readme": "ERROR: No README data found!",
-  "_id": "route-loader@1.0.0",
-  "_shasum": "aca20dc49906a9bde148e4ea7e5ace318f4ffcde",
-  "_from": "git+https://github.com/inu1255/route-loader.git",
-  "_resolved": "git+https://github.com/inu1255/route-loader.git#223207c39061ac0102d800251f3de4551f516b7b"
+  "homepage": "https://github.com/inu1255/route-loader#readme"
 }
