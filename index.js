@@ -20,20 +20,21 @@ function getRoute(rootPath){
                 return false;
             });
         }
-        function walk(dir) {
-            var data = {path:"/",component:"",childRoutes:[]}
+        function walk(dir,path) {
+            var url = path.length>rootPath.length?"/"+dir.substring(rootPath.length,dir.length-1):"/"
+            var data = {path:path,url:url,component:"",childRoutes:[]}
             dir = /\/$/.test(dir) ? dir : dir + '/';
             var files = fs.readdirSync(dir);
             files.forEach(function (item, next) {
                 var info = fs.statSync(dir + item);
                 if (info.isDirectory()) {
-                    data.childRoutes.push(walk(dir + item + '/'))
+                    data.childRoutes.push(walk(dir + item + '/',item))
                 } 
                 else if(/\.jsx?$/.test(item)) {
                     var name = item.replace(/\.jsx?$/,"")
                     // 路由相对地址
                     var importPath = "./"+(dir+item).substring(rootPath.length)
-                    var route = {component:importPath}
+                    var route = {component:importPath,url:"/"+(dir+name).substring(rootPath.length)}
                     // 添加 indexRoute
                     if(name=="index")data.indexRoute = route
                     // 添加 childRoutes
@@ -48,7 +49,7 @@ function getRoute(rootPath){
             })
             return data
         }
-        result = walk(rootPath)
+        result = walk(rootPath,"/")
     })
 }
 
