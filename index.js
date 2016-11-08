@@ -8,32 +8,32 @@ function getRoute(rootPath){
         function readLine(file_path,route){
             if(typeof route!="object")return;
             lineReader.eachLine(file_path, function(line, last) {
-                if(!/^\/\//.test(line)){
-                    counter--
-                    if(counter<1)resolve(result)
-                    return false;
+                if(/^\/\//.test(line)){
+                    line = line.substring(2).replace(/\s/g,"")
+                    var arr = line.split(":")
+                    if(arr.length>1)route[arr[0]] = arr[1]
+                    else route.title = arr[0]
+                    if(!last)return
                 }
-                line = line.substring(2).replace(/\s/g,"")
-                var arr = line.split(":")
-                if(arr.length>1)route[arr[0]] = arr[1]
-                else route.title = arr[0]
+                counter--
+                if(counter<1)resolve(result)
+                return false;
             });
         }
-        function walk(dir,path) {
-            var url = path.length>rootPath.length?"/"+dir.substring(rootPath.length,dir.length-1):"/"
-            var data = {path:path,url:url,component:"",childRoutes:[]}
+        function walk(dir) {
+            var data = {path:"/",component:"",childRoutes:[]}
             dir = /\/$/.test(dir) ? dir : dir + '/';
             var files = fs.readdirSync(dir);
             files.forEach(function (item, next) {
                 var info = fs.statSync(dir + item);
                 if (info.isDirectory()) {
-                    data.childRoutes.push(walk(dir + item + '/',item))
+                    data.childRoutes.push(walk(dir + item + '/'))
                 } 
                 else if(/\.jsx?$/.test(item)) {
                     var name = item.replace(/\.jsx?$/,"")
                     // 路由相对地址
                     var importPath = "./"+(dir+item).substring(rootPath.length)
-                    var route = {component:importPath,url:"/"+(dir+name).substring(rootPath.length)}
+                    var route = {component:importPath}
                     // 添加 indexRoute
                     if(name=="index")data.indexRoute = route
                     // 添加 childRoutes
@@ -48,7 +48,7 @@ function getRoute(rootPath){
             })
             return data
         }
-        result = walk(rootPath,"/")
+        result = walk(rootPath)
     })
 }
 
