@@ -20,7 +20,8 @@ function getRoute(rootPath){
             });
         }
         function walk(dir,path) {
-            var data = {path:path,url:"/"+dir.substring(rootPath.length,dir.length-1),component:"",childRoutes:[]}
+            var url = path.length>rootPath.length?"/"+dir.substring(rootPath.length,dir.length-1):"/"
+            var data = {path:path,url:url,component:"",childRoutes:[]}
             dir = /\/$/.test(dir) ? dir : dir + '/';
             var files = fs.readdirSync(dir);
             files.forEach(function (item, next) {
@@ -50,11 +51,6 @@ function getRoute(rootPath){
         result = walk(rootPath,"/")
     })
 }
-
-getRoute("src/views/").then((data)=>{
-    console.log(data)
-    console.log(data.childRoutes[0])
-})
 
 module.exports = function(source, map) {
     this.cacheable();
