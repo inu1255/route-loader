@@ -10,9 +10,9 @@ function getRoute(rootPath){
             lineReader.eachLine(file_path, function(line, last) {
                 if(/^\/\//.test(line)){
                     line = line.substring(2).replace(/\s/g,"")
-                    var arr = line.split(":")
-                    if(arr.length>1)route[arr[0]] = arr[1]
-                    else route.title = arr[0]
+                    var index = line.indexOf(":")
+                    if(index>0)route[line.substring(0,index)] = line.substring(index+1)
+                    else route.title = line
                     if(!last)return
                 }
                 counter--
